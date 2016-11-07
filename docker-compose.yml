@@ -1,0 +1,58 @@
+version: "2"
+
+services:
+  
+  nginx:
+    image: nginx:1.11
+    env_file:
+      - ./.env
+    environment:
+      VIRTUAL_HOST: ${HOSTNAME}
+      VIRTUAL_PORT: 80
+    links: 
+      - php
+    volumes:
+      - ./Build/Docker/nginx.conf:/etc/nginx/nginx.conf          
+
+  php:
+    image: php:7-fpm
+    env_file:
+      - ./.env
+    links:
+      - mysql
+    volumes:
+      - ./Build/Docker/php-fpm-pool.conf:/etc/php/7.0/fpm/pool.d/www.conf          
+
+  composer:
+    image: composer/composer:1.1
+    env_file:
+      - ./.env
+    working_dir: /app/
+    volumes:
+      - ./:/app/
+      - ~/.composer/:/composer/    
+
+  mysql:
+    image: mysql:5.6
+    env_file:
+      - ./.env
+    volumes:      
+      - ./Build/Docker/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf
+
+  mailcatcher:
+    image: schickling/mailcatcher
+    environment:
+      VIRTUAL_HOST: "mailcatcher.${HOSTNAME}"
+      VIRTUAL_PORT: 1080
+    
+#  elastic:
+#    image: elasticsearch:1.7
+#    command: elasticsearch -Des.network.host=0.0.0.0
+#    environment:
+#      VIRTUAL_HOST: elastic.${HOSTNAME}
+#      VIRTUAL_PORT: 9200
+#    volumes:
+#      - ./Build/docker/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml  
+
+#  redis:
+#    image: redis

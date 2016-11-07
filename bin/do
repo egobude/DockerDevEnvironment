@@ -1,0 +1,100 @@
+#!/bin/sh
+
+set -u
+set -e
+
+source "./.env"
+
+# Output colors
+NORMAL="\\033[0;39m"
+RED="\\033[1;31m"
+BLUE="\\033[1;34m"
+
+help() {
+    echo "-----------------------------------------------------------------------"
+    echo " Available commands                                                   -"
+    echo "-----------------------------------------------------------------------"
+    echo "   > bash - short description goes here"
+    echo "   > flow - short description goes here"
+    echo "   > composer - short description goes here"
+    echo "   > mysql - short description goes here"
+    echo "   > start - short description goes here"
+    echo "   > stop - short description goes here"
+    echo "   > status - short description goes here"
+    echo "   > restart - short description goes here"
+    echo "   > upgrade - short description goes here"
+    echo "   > help - short description goes here"
+    echo "-----------------------------------------------------------------------"
+}
+
+log() {
+    echo "${HOSTNAME} | $BLUE > $1 $NORMAL"
+}
+
+bash() {
+    log "Execute bash commands"
+    docker-compose exec --user=1000:33 app /bin/bash   
+}
+
+flow() {
+    log "Execute flow commands"
+    docker-compose exec --user=1000:33 app php flow $@
+}
+
+composer() {
+    log "Execute composer command"
+    docker-compose run --rm composer $@
+}
+
+mysql() {
+    log "Execute mysql commands"
+    docker-compose exec mysql mysql -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE $@
+}
+
+#mysqldump() {
+    # docker-compose exec db mysqldump -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE $@
+#}
+
+#mysqlimport() {
+    # docker exec -i $(docker-compose ps | grep _db_ | awk '{print $1}') mysql -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE
+#}
+
+upgrade() {
+    log "Upgrade development environment"
+    while true; do
+    read -p "Do you want to upgrade your development environment?" yn
+    case $yn in
+        [Yy]* ) stop; pull; start; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+}
+
+pull() {
+    log "Pull latest images"
+    docker-compose pull
+}
+
+start() {
+    log "Start development environment"
+    docker-compose up -d
+}
+
+stop() {
+    log "Stop development environment"
+    docker-compose down $@
+}
+
+status() {
+    log "Status for the development environment"
+    docker-compose ps $@
+}
+
+restart() {
+    log "Restart development environment"
+    stop
+    start
+}
+
+$*
