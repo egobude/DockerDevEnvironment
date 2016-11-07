@@ -23,4 +23,3 @@ Under Build/Docker you find some configuration files wich are mounted to the con
 
 * Improve documentation
   * How to write custom commands
-* Make do.sh expandable via other shell scripts for more commands (hint: use source or export in shell script)
