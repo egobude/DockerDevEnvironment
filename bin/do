@@ -3,6 +3,10 @@
 set -u
 set -e
 
+# Check if docker and docker-compose are available on trhe system
+command -v docker >/dev/null 2>&1 || { echo "docker is not installed. Aborting." >&2; exit 1; }
+command -v docker-compose >/dev/null 2>&1 || { echo "docker-compose is not installed. Aborting." >&2; exit 1; }
+
 source "./.env"
 
 # Output colors
