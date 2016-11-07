@@ -3,38 +3,38 @@
 set -u
 set -e
 
-start() {
+environment_start() {
     log "Start development environment"
     docker-compose up -d
 }
 
-stop() {
+environment_stop() {
     log "Stop development environment"
     docker-compose down --remove-orphans $@
 }
 
-status() {
+environment_status() {
     log "Status for the development environment"
     docker-compose ps $@
 }
 
-restart() {
+environment_restart() {
     log "Restart development environment"
-    stop
-    start
+    environment_stop
+    environment_start
 }
 
-pull() {
+environment_pull() {
     log "Pull latest docker images"
     docker-compose pull
 }
 
-upgrade() {
+environment_upgrade() {
     log "Upgrade development environment"
     while true; do
     read -p "Do you really want to upgrade your development environment?" yn
     case $yn in
-        [Yy]* ) pull; restart; break;;
+        [Yy]* ) environment_pull; environment_restart; break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no. Choose wisely ;)" ;;
     esac
