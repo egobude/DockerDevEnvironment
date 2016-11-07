@@ -10,20 +10,22 @@ NORMAL="\\033[0;39m"
 RED="\\033[1;31m"
 BLUE="\\033[1;34m"
 
-help() {
+help() {    
     echo "-----------------------------------------------------------------------"
-    echo " Available commands                                                   -"
+    echo " ${HOSTNAME} | Available commands                                     -"
     echo "-----------------------------------------------------------------------"
-    echo "   > bash - short description goes here"
-    echo "   > flow - short description goes here"
-    echo "   > composer - short description goes here"
-    echo "   > mysql - short description goes here"
-    echo "   > start - short description goes here"
-    echo "   > stop - short description goes here"
-    echo "   > status - short description goes here"
-    echo "   > restart - short description goes here"
-    echo "   > upgrade - short description goes here"
-    echo "   > help - short description goes here"
+    echo "$BLUE"    
+    echo "   > ./bin/do bash - Starts a bash in the php container"
+    echo "   > ./bin/do flow <your command> - Executes a flow command in the php container"
+    echo "   > ./bin/do composer <your command> - Executes a composer command"
+    echo "   > ./bin/do mysql <your command> - Executes a mysql command in the php container"
+    echo "   > ./bin/do start - Start the development environment"
+    echo "   > ./bin/do stop - Stop the development environment"
+    echo "   > ./bin/do status - Overview over the development environment"
+    echo "   > ./bin/do restart - Restart the development environment"
+    echo "   > ./bin/do upgrade - Upgrade the development environment"
+    echo "   > ./bin/do help - Command overview"
+    echo "$NORMAL"
     echo "-----------------------------------------------------------------------"
 }
 
@@ -32,13 +34,13 @@ log() {
 }
 
 bash() {
-    log "Execute bash commands"
-    docker-compose exec --user=1000:33 app /bin/bash   
+    log "Starting bash in php container"
+    docker-compose exec --user=1000:33 php /bin/bash
 }
 
 flow() {
     log "Execute flow commands"
-    docker-compose exec --user=1000:33 app php flow $@
+    docker-compose exec --user=1000:33 php php flow $@
 }
 
 composer() {
@@ -62,17 +64,17 @@ mysql() {
 upgrade() {
     log "Upgrade development environment"
     while true; do
-    read -p "Do you want to upgrade your development environment?" yn
+    read -p "Do you really want to upgrade your development environment?" yn
     case $yn in
         [Yy]* ) stop; pull; start; break;;
         [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+        * ) echo "Please answer yes or no. Choose wisely ;)" ;;
     esac
 done
 }
 
 pull() {
-    log "Pull latest images"
+    log "Pull latest docker images"
     docker-compose pull
 }
 

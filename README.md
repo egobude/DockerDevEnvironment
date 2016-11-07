@@ -1,27 +1,26 @@
-Docker Development Setup
+Docker Development Environment
 ===================
 
-Use the commands in `bin/do` to interact with your development environment:
+Use the commands in `./bin/do` to interact with your development environment:
 
-## Commands
+## Available commands
 
-### Development environment:
+* `./bin/do bash` - Starts a bash in the php container
+* `./bin/do flow <your command>` - Executes a flow command in the php container
+* `./bin/do mysql <your command>` - Executes a mysql command in the php container
+* `./bin/do start` - Start the development environment
+* `./bin/do stop` - Stop the development environment
+* `./bin/do status` - Overview over the development environment
+* `./bin/do restart` - Restart the development environment
+* `./bin/do upgrade` - Upgrade the development environment
+* `./bin/do help` - Command overview
 
-* `./bin/do start` short description goes here
-* `./bin/do stop` short description goes here
-* `./bin/do restart` short description goes here
+## Customize
 
-### Flow/Neos commands:
+Under Build/Docker you find some configuration files wich are mounted to the containers on startup. You can customize or add new files for your needs.
 
-* `./bin/do flow <your command>` short description goes here
-* `./bin/do bash` short description goes here
+## Todo
 
-### MySQL:
-
-* `./bin/do mysql <your command>` short description goes here
-* `./bin/do mysqldump` short description goes here
-* `./bin/do mysqlimport`short description goes here
-
-## Customize 
-
-Under Build/Docker you find some ...
+* Improve documentation
+  * How to write custom commands
+* Make do.sh expandable via other shell scripts for more commands (hint: use source or export in shell script)
