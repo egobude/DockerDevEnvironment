@@ -7,6 +7,11 @@ set -e
 command -v docker >/dev/null 2>&1 || { echo "docker is not installed. Aborting." >&2; exit 1; }
 command -v docker-compose >/dev/null 2>&1 || { echo "docker-compose is not installed. Aborting." >&2; exit 1; }
 
+# Get docker and docker-compose version
+dockerVersion=`docker --version`
+dockerComposeVersion=`docker-compose --version`
+
+# Include .env file
 source "./.env"
 
 # Output colors
@@ -16,7 +21,11 @@ BLUE="\\033[1;34m"
 # Show a list of commands
 help() {
     echo "-----------------------------------------------------------------------"
-    echo "Available commands                                                    -"
+    echo "Available commands                                                     "
+    echo                                                             
+    echo "$dockerVersion                                                         "
+    echo "$dockerComposeVersion                                                  "
+    echo
     echo "-----------------------------------------------------------------------"
     typeset -f | awk '/ \(\) $/ && !/^log / {print $1}'        
     echo "-----------------------------------------------------------------------"
@@ -27,7 +36,7 @@ log() {
     echo "${HOSTNAME} | $BLUE > $1 $NORMAL"
 }
 
-# Import additional shell scripts
+# Include additional shell scripts
 if [ -d ./bin/custom ]; then
   for file in ./bin/custom/*.sh; do
     source "$file"
