@@ -37,8 +37,15 @@ log() {
 }
 
 # Include additional shell scripts
-if [ -d ./bin/custom ]; then
-  for file in ./bin/custom/*.sh; do
+if [ -d ./bin/plugins ]; then
+  for file in ./bin/plugins/*.sh; do
+    source "$file"
+  done
+fi
+
+# Include user specific shell scripts located under ~/.do
+if [ -d ~/.do ] && [ "$(ls -A ~/.do/)" ]; then
+  for file in  ~/.do/*.sh; do    
     source "$file"
   done
 fi

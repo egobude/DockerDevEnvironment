@@ -1,25 +1,43 @@
 Docker Development Environment
 ===================
 
-Use the commands in `./bin/do` to interact with your development environment:
-
 ## Available commands
 
-* `./bin/do bash` - Starts a bash in the php container
-* `./bin/do flow <your command>` - Executes a flow command in the php container
-* `./bin/do mysql <your command>` - Executes a mysql command in the php container
-* `./bin/do start` - Start the development environment
-* `./bin/do stop` - Stop the development environment
-* `./bin/do status` - Overview over the development environment
-* `./bin/do restart` - Restart the development environment
-* `./bin/do upgrade` - Upgrade the development environment
-* `./bin/do help` - Command overview
+Execute `./bin/do help` to get a list of all available commands.
 
 ## Customize
 
-Under Build/Docker you find some configuration files wich are mounted to the containers on startup. You can customize or add new files for your needs.
+### Configuration files
+
+Under ./Build/Docker you find some configuration files wich are mounted to the containers on startup. You can customize or add new files for your needs.
+
+### Write your own scripts
+
+Create a `~/.do` folder in your home directory and place a .sh file in the folder. For example:
+
+Create the folder and the .sh file:
+
+```
+mkdir ~/.do
+vim ~/.do/foo.sh
+```
+
+Put this content into the `~/.do/foo.sh` file
+
+```
+#!/bin/sh
+
+set -u
+set -e
+
+foo() {
+   log "echo bar"
+}
+```
+
+When you now execute ./bin/do help you should see a new command `foo` in the listing.
 
 ## Todo
 
 * Improve documentation
-  * How to write custom commands
+* Tweak the output of `./bin/do help` to show a description for each command
