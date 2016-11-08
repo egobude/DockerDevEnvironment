@@ -52,6 +52,23 @@ services:
       - ~/.composer/:/composer/   
 
   ###############################################
+  ## NodeJs
+
+  nodejs:    
+    image: dragonmantank/nodejs-grunt-bower
+    volumes:
+      - ./data:/data
+      - "~/.gitconfig:/data/.gitconfig"            
+
+  ###############################################
+  ## beanstalkd 
+  
+  beanstalkd:
+    image: schickling/beanstalkd
+    ports:
+      - 11300:11300
+
+  ###############################################
   ## Mailcatcher
 
   # mailcatcher:
