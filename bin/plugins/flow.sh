@@ -8,6 +8,11 @@ flow() {
     docker-compose exec --user=1000:33 php php flow $@
 }
 
+flow_create_project() {
+    log "Create new flow application"
+    composer create-project --no-dev neos/flow-base-distribution /app
+}
+
 flow_cache_clear() {
     log "Clear flow cache"
     docker-compose exec --user=1000:33 php php flow cache:warmup

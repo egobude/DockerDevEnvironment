@@ -31,6 +31,7 @@ To get a full list of all available commands just execute `./bin/do help`
 ### Flow Framwork
 
 * `./bin/do flow`
+* `./bin/do flow_create_project`
 * `./bin/do flow_clear_cache`
 * `./bin/do flow_cache_warmup`
 * `./bin/do flow_doctrine_migrationgenerate`
@@ -51,6 +52,7 @@ To get a full list of all available commands just execute `./bin/do help`
 
 ### Neos CMS (Not fully implemented)
 
+* `./bin/do neos_create_project`
 * `./bin/do neos_site_prune`
 * `./bin/do neos_site_import`
 * `./bin/do neos_site_export`
@@ -75,6 +77,20 @@ To get a full list of all available commands just execute `./bin/do help`
 ### Time
 
 * `./bin/do timestamp`
+
+## Usage
+
+Start the docker environment
+
+`./bin/do environment_start`
+
+Create a Neos CMS project:
+
+`./bin/do composer create-project --no-dev neos/neos-base-distribution /app`
+
+Create a Flow Framework project
+
+`./bin/do composer create-project --no-dev neos/flow-base-distribution /app`
 
 ## Customize
 
