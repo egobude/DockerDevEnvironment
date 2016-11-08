@@ -12,10 +12,13 @@ services:
     environment:
       VIRTUAL_HOST: ${HOSTNAME}
       VIRTUAL_PORT: 80
+    ports:
+      - 80
     links: 
       - php
     volumes:
       - ./Build/Docker/nginx.conf:/etc/nginx/nginx.conf
+      - ./data:/var/www/Web
 
   ###############################################
   ## PHP
@@ -27,7 +30,8 @@ services:
     links:
       - mysql
     volumes:
-      - ./Build/Docker/php-fpm-pool.conf:/etc/php/7.0/fpm/pool.d/www.conf          
+      - ./Build/Docker/php-fpm-pool.conf:/etc/php/7.0/fpm/pool.d/www.conf        
+      - ./data:/var/www/Web
 
   ###############################################
   ## MySQL
@@ -48,7 +52,7 @@ services:
       - ./.env
     working_dir: /app/
     volumes:
-      - ./:/app/
+      - ./data:/app/
       - ~/.composer/:/composer/   
 
   ###############################################
@@ -63,10 +67,10 @@ services:
   ###############################################
   ## beanstalkd 
   
-  beanstalkd:
-    image: schickling/beanstalkd
-    ports:
-      - 11300:11300
+  #beanstalkd:
+  #  image: schickling/beanstalkd
+  #  ports:
+  #    - 11300:11300
 
   ###############################################
   ## Mailcatcher
@@ -92,5 +96,5 @@ services:
   ###############################################
   ## Redis
   
-  # redis:
+  #redis:
   #  image: redis
