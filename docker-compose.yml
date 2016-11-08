@@ -18,7 +18,7 @@ services:
       - php
     volumes:
       - ./Build/Docker/nginx.conf:/etc/nginx/nginx.conf
-      - ./data:/var/www/Web
+      - ${DATA_LOCATION}:/var/www/Web
 
   ###############################################
   ## PHP
@@ -31,7 +31,7 @@ services:
       - mysql
     volumes:
       - ./Build/Docker/php-fpm-pool.conf:/etc/php/7.0/fpm/pool.d/www.conf        
-      - ./data:/var/www/Web
+      - ${DATA_LOCATION}:/var/www/Web
 
   ###############################################
   ## MySQL
@@ -52,7 +52,7 @@ services:
       - ./.env
     working_dir: /app/
     volumes:
-      - ./data:/app/
+      - ${DATA_LOCATION}:/app/
       - ~/.composer/:/composer/   
 
   ###############################################
@@ -61,8 +61,7 @@ services:
   nodejs:    
     image: dragonmantank/nodejs-grunt-bower
     volumes:
-      - ./data:/data
-      - "~/.gitconfig:/data/.gitconfig"            
+      - ${DATA_LOCATION}:/data           
 
   ###############################################
   ## beanstalkd 
