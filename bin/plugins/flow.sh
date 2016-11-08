@@ -17,3 +17,18 @@ flow_cache_warmup() {
     log "Warump flow cache"
     docker-compose exec --user=1000:33 php php flow cache:warmup
 }
+
+flow_doctrine_migrationgenerate() {
+    log "Execute flow doctrine:migrationgenerate"
+    docker-compose exec --user=1000:33 php php flow doctrine:migrationgenerate $@
+}
+
+flow_doctrine_migrationstatus() {
+    log "Execute flow migrationstatus"
+    docker-compose exec --user=1000:33 php php flow doctrine:migrationstatus $@
+}
+
+flow_doctrine_migrate() {
+    log "Execute flow doctrine:migrate"
+    docker-compose exec --user=1000:33 php php flow doctrine:migrationgenerate $@
+}
