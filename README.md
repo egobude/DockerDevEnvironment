@@ -9,6 +9,11 @@ To get a full list of all available commands just execute `./bin/do help`
 
 * `./bin/do beanstalkd`
 
+### Bower
+
+* `./bin/do bower`
+* `./bin/do bower_help`
+
 ### Composer
 
 * `./bin/do composer`
@@ -32,9 +37,15 @@ To get a full list of all available commands just execute `./bin/do help`
 * `./bin/do flow_doctrine_migrationstatus`
 * `./bin/do flow_doctrine_migrate`
 
+### Grunt
+
+* `./bin/do grunt`
+* `./bin/do grunt_help`
+
 ### MySQL (Not fully implemented)
 
 * `./bin/do mysql`
+* `./bin/do mysql_help`
 * `./bin/do mysql_dump`
 * `./bin/do mysql_import`
 
@@ -47,9 +58,12 @@ To get a full list of all available commands just execute `./bin/do help`
 ### NodeJs
 
 * `./bin/do nodejs`
-* `./bin/do nodejs bower`
-* `./bin/do nodejs grunt`
-* `./bin/do nodejs npm`
+* `./bin/do nodejs_help`
+
+### NPM
+
+* `./bin/do npm`
+* `./bin/do npm_help`
 
 ### Redis
 
