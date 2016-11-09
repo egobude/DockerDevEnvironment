@@ -1,12 +1,8 @@
 version: "2"
-
-services:
-  
-  ###############################################
-  ## Nginx
+services:  
   
   nginx:
-    image: nginx:1.11
+    image: avency/nginx:1.11
     env_file:
       - ./.env
     environment:
@@ -19,12 +15,9 @@ services:
     volumes:
       - ./Build/Docker/nginx.conf:/etc/nginx/nginx.conf
       - ${DATA_LOCATION}:/var/www/Web
-
-  ###############################################
-  ## PHP
-
+  
   php:
-    image: php:7-fpm
+    image: avency/php:7-fpm
     env_file:
       - ./.env
     links:
@@ -32,68 +25,47 @@ services:
     volumes:
       - ./Build/Docker/php-fpm-pool.conf:/etc/php/7.0/fpm/pool.d/www.conf        
       - ${DATA_LOCATION}:/var/www/Web
-
-  ###############################################
-  ## MySQL
-
+  
   mysql:
-    image: mysql:5.6
+    image: avency/mysql:5.6
     env_file:
       - ./.env
     volumes:      
       - ./Build/Docker/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf
-
-  ###############################################
-  ## Composer
   
   composer:
-    image: composer/composer:1.1
+    image: avency/composer:1.1
     env_file:
       - ./.env
     working_dir: /app/
     volumes:
       - ${DATA_LOCATION}:/app/
       - ~/.composer/:/composer/   
-
-  ###############################################
-  ## NodeJs
-
-  nodejs:    
-    image: dragonmantank/nodejs-grunt-bower
-    volumes:
-      - ${DATA_LOCATION}:/data           
-
-  ###############################################
-  ## beanstalkd 
+  
+  #nodejs:    
+  #  image: avency/nodejs-grunt-bower
+  #  volumes:
+  #    - ${DATA_LOCATION}:/data           
   
   #beanstalkd:
-  #  image: schickling/beanstalkd
+  #  image: avency/beanstalkd
   #  ports:
   #    - 11300:11300
 
-  ###############################################
-  ## Mailcatcher
-
   # mailcatcher:
-  #  image: schickling/mailcatcher
+  #  image: avency/mailcatcher
   #  environment:
   #    VIRTUAL_HOST: "mailcatcher.${HOSTNAME}"
   #    VIRTUAL_PORT: 1080
-
-  ###############################################
-  ## Elasticsearch
-  
+ 
   # elastic:
-  #  image: elasticsearch:1.7
+  #  image: avency/elasticsearch:1.7
   #  command: elasticsearch -Des.network.host=0.0.0.0
   #  environment:
   #    VIRTUAL_HOST: elastic.${HOSTNAME}
   #    VIRTUAL_PORT: 9200
   #  volumes:
   #    - ./Build/docker/elasticsearch.yml:/etc/elasticsearch/elasticsearch.yml  
-
-  ###############################################
-  ## Redis
-  
+    
   #redis:
-  #  image: redis
+  #  image: avency/redis
